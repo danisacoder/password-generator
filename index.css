@@ -2,6 +2,7 @@ body {
     margin: 0;
     background-color: #1F2937;
     color: white;
+    font-family: sans-serif;
 }
 
 span {
@@ -43,15 +44,81 @@ button {
     width: 211px;
     height: 39px;
     border-radius: 6px;
-    /* margin: 0 auto; */
-    /* border: 1px solid white; */
+
     display: flex;
     justify-content: center;
     align-items: center;
     user-select: none;
 }
 
-.passfield:active {
-    background-color: gray;
+.active {
+    background-color: pink;
     
+}
+
+#container {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+#generator {
+    border: 1px solid white;
+    width: 500px;
+
+}
+
+
+#copy-modal {
+    position: relative;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    opacity: 0%;
+}
+
+
+#copy-modal p {
+    color: black;
+    background-color: white;  
+    padding: 10px 20px;
+    /* margin: 30px; */
+    border-radius: 5px;
+
+}
+
+.get-animated {
+    animation-name: quickfade;
+    animation-duration: 1s;
+}
+
+@keyframes quickfade {
+    0% {opacity: 0%}
+    5% {opacity: 100%}
+    100% {opacity: 0%}
+}
+
+#checkboxes Label {
+    font-size: .80em;
+}
+
+#slide-container Label {
+    margin: 12px 5px;
+}
+
+#inputs {
+    margin: 20px 0 0 0;
+}
+
+#slide-range {
+    /* display: inline; */
+    margin: 20px 0 0 0;
+
+}
+
+#slide-value-display {
+    display: inline; 
+    margin: 0 10px;
 }
