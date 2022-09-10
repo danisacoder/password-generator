@@ -65,8 +65,9 @@ button {
 }
 
 #generator {
-    border: 1px solid white;
-    width: 500px;
+    /* border: 1px solid white; */
+    min-width: 500px;
+    min-height: 600px;
 
 }
 
@@ -122,3 +123,4 @@ button {
     display: inline; 
     margin: 0 10px;
 }
+

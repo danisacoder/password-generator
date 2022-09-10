@@ -14,7 +14,7 @@ let selectedLength = slideRange.value
 let checkedBoxesArr = []
 let uncheckedBoxesArr = []
 
-updateCharacters()
+// updateCharacters()
 
 function getCheckedBoxes() {
 
