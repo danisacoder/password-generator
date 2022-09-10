@@ -1,178 +1,123 @@
 var characters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9","~","`","!","@","#","$","%","^","&","*","(",")","_","-","+","=","{","[","}","]",",","|",":",";","<",">",".","?", "/"];
+let numbersArr = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 let symbolsArr = ["~","`","!","@","#","$","%","^","&","*","(",")","_","-","+","=","{","[","}","]",",","|",":",";","<",">",".","?", "/"]
+let upppercaseArr = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
+let lowercaseArr = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
 let pass1El = document.getElementById('pass1')
 let pass2El = document.getElementById('pass2')
 let passButton = document.querySelector('button')
 let copyModal = document.getElementById('copy-modal');
 let slideRange = document.getElementById('slide-range')
 let sliderText = document.getElementById('slide-value-display')
-let currentCharacters = []
+let currentCharacters = characters
 let selectedLength = slideRange.value
+let checkedBoxesArr = []
+let uncheckedBoxesArr = []
 
-// Filtering the password symbols according to user selection of 'numbers' and 'symbols' checkboxes
+updateCharacters()
 
-// function characterFilter(arr) {
+function getCheckedBoxes() {
 
-//     newArr = []
+    let checkedBoxesArr = []
+    
+    let checkedBoxesNodeList = document.querySelectorAll('input[type=checkbox]:checked')
 
-//     let numbersChecked = document.getElementById('numbers').checked
-//     let symbolsChecked = document.getElementById('symbols').checked
+    for (let i = 0; i < checkedBoxesNodeList.length; i++) {
+        checkedBoxesArr.push(checkedBoxesNodeList[i].id)
+    } 
 
-
-//     if (numbersChecked && symbolsChecked) {
-
-//         console.log('numbers and symbols are checked')
-
-//         currentCharacters = characters
-
-//         console.log(currentCharacters)
-
-//     } else if (symbolsChecked) {
-
-//         console.log('symbols are checked, numbers are not')
-
-//         // create new filtered array without numbers
-
-//         for (let i = 0; i < arr.length; i++) {
-
-//             if (Number.isNaN(parseInt(arr[i]))) {
-//                 newArr.push(arr[i])
-//             }   
-
-//         }
-
-//         currentCharacters = newArr
-
-//         console.log(currentCharacters)
-
-//     } else if (numbersChecked && !symbolsChecked) {
-
-//         console.log('numbers are checked, symbols are not')
-
-//         newArr = characters.filter(item => !symbolsArr.includes(item))
-
-//         currentCharacters = newArr
-
-//         console.log(currentCharacters)
-
-//     } else {
-        
-//         console.log('neither numbers or symbols are checked')
-
-//             let newArr = []
-
-//             for (let i = 0; i < arr.length; i++) {
-
-//                if (Number.isNaN(parseInt(arr[i]))) {
-//                     newArr.push(arr[i])
-//                 }   
-
-//             }
-
-//             newArr = newArr.filter(item => !symbolsArr.includes(item))
-
-//             currentCharacters = newArr
-
-//             console.log(currentCharacters)
-
-//     }
-
-
-
-// }
-
-function characterFilter(arr) {
-
-    newArr = []
-
-    let numbersChecked = document.getElementById('numbers').checked
-    let symbolsChecked = document.getElementById('symbols').checked
-
-    function removeNumbers(arr) {
-
-        for (let i = 0; i < arr.length; i++) {
-
-            if (Number.isNaN(parseInt(arr[i]))) {
-                newArr.push(arr[i])
-            }   
-
-        }
-
-        currentCharacters = newArr 
-
-        console.log(currentCharacters)
-
-    }
-
-    function removeSymbols() {
-
-        newArr = currentCharacters.filter(item => !symbolsArr.includes(item))
-
-        currentCharacters = newArr
-
-        console.log(currentCharacters)
-
-    }
-
-
-    if (numbersChecked && symbolsChecked) {
-
-        console.log('numbers and symbols are checked')
-
-        currentCharacters = characters
-
-        console.log(currentCharacters)
-
-    } else if (symbolsChecked && !numbersChecked) {
-
-        console.log('symbols are checked, numbers are not')
-
-        removeNumbers(currentCharacters)
-
-    } else if (numbersChecked && !symbolsChecked) {
-
-        console.log('numbers are checked, symbols are not')
-
-        removeSymbols(currentCharacters)
-
-
-    } else {
-        
-        console.log('neither numbers or symbols are checked')
-
-        removeNumbers(currentCharacters)
-        removeSymbols(currentCharacters)
-
-    }
-
-
+    return checkedBoxesArr
 
 }
 
+function getUncheckedBoxes() {
+
+    uncheckedBoxesArr = []
+
+    let boxesNodeList = document.querySelectorAll('input[type=checkbox]')
+
+    for (let i = 0; i < boxesNodeList.length; i++) {
+        if (boxesNodeList[i].checked === false) 
+            uncheckedBoxesArr.push(boxesNodeList[i].id)
+    }
+
+    return uncheckedBoxesArr 
+
+}
 
 // Set an event listener here for the checkboxes which runs a function whenever they change state
-
-// var checkbox = document.querySelectorAll('input[type=checkbox]')
-
-// checkbox.addEventListener('change', function() {
-//     characterFilter(characters)
-// })
 
 for (const checkbox of document.querySelectorAll('input[type=checkbox]')) {
 
     checkbox.addEventListener('change', function() {
     
-    characterFilter(currentCharacters)
-    
-    if (pass1El.textContent != "") {
-        AssignPass(selectedLength)
-    }
-    
+        if (pass1El.textContent != "") {
+            AssignPass(selectedLength)
+        }
+
+        getCheckedBoxes()
+        getUncheckedBoxes()
+        updateCharacters()
+
     })
 
 }
 
-characterFilter(currentCharacters)
+function updateCharacters() {
+    // Tell me the array that I need to take out of the options. Then I can filter it out.'
+
+    currentCharacters = characters
+
+    if (uncheckedBoxesArr.length === 0) {
+
+        console.log('nothing unchecked')
+        console.log(currentCharacters)
+
+    }
+
+    if (uncheckedBoxesArr.includes('numbers')) {
+
+        let res = currentCharacters.filter(entry => !numbersArr.includes(entry))
+
+        currentCharacters = res
+
+        console.log(currentCharacters)
+
+    }
+
+    if (uncheckedBoxesArr.includes('symbols')) {
+
+        let res = currentCharacters.filter(entry => !symbolsArr.includes(entry))
+
+        currentCharacters = res
+
+        console.log(currentCharacters)
+
+    }
+
+    if (uncheckedBoxesArr.includes('uppercase')) {
+                
+        let res = currentCharacters.filter(entry => !upppercaseArr.includes(entry))
+
+        currentCharacters = res
+
+        console.log(currentCharacters)
+
+    }
+
+    if (uncheckedBoxesArr.includes('lowercase')) {
+
+        let res = currentCharacters.filter(entry => !lowercaseArr.includes(entry))
+
+        currentCharacters = res
+
+        console.log(currentCharacters)
+
+    }
+
+    AssignPass(selectedLength)
+
+}
 
 // Setting default slider value and writing to slider display text
 
@@ -210,15 +155,23 @@ function generatePass(length) {
 }
 
 function AssignPass(length) {
-    pass1El.textContent = generatePass(length)
-    pass2El.textContent = generatePass(length)
+
+    if (uncheckedBoxesArr.length === 4) {
+        console.log('No characters selected!')
+        pass1El.textContent = ""
+        pass2El.textContent = ""
+    } else {
+        pass1El.textContent = generatePass(length)
+        pass2El.textContent = generatePass(length)
+    }
+
 }
 
 passButton.addEventListener('click', function() {
     AssignPass(selectedLength)
 })
 
-
+// "Copy" modal function
 
 document.addEventListener('click', function(event) {
 
